@@ -96,7 +96,7 @@ def render(all_tags, bookmarks):
 
 if __name__ == '__main__':
     
-    # render(*get_data_by_json())
+    render(*get_data_by_json())
 
-    render(*get_data_by_issues())
+    # render(*get_data_by_issues())
 
