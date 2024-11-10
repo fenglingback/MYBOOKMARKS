@@ -20,9 +20,6 @@ def get_data_by_json():
 
 def get_data_by_issues():
     # 替换为你的 GitHub 用户名和仓库名
-    # username = 'your_username'
-    # repo_name = 'your_repo_name'
-
     username = 'fenglingback'
     repo_name = 'TDC'
 

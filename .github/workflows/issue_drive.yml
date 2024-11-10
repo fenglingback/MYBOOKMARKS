@@ -2,7 +2,7 @@
 name: Render by issues and Deploy Pages
 
 on:
-  # 在 issues 上打开或关闭 issue 时触发
+  # 在 issues 上打开、编辑、关闭 issue，以及在 issue 上添加或删除标签时运行
   issues:
     types: [opened, edited, closed, labeled, unlabeled]
 
@@ -60,6 +60,8 @@ jobs:
   # 删除且只保留3个旧的运行
   del_runs:
     runs-on: ubuntu-latest
+    # 在deploy作业后运行
+    # needs: deploy
     permissions:
       actions: write
       contents: read
