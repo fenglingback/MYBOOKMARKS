@@ -1,0 +1,61 @@
+{
+    "Bookmarks": [
+        {
+            "title": "微博",
+            "url": "https://www.weibo.com",
+            "desc": "美女打拳比较多的地方",
+            "tags": [
+                "社交",
+                "社区",
+                "娱乐"
+            ]
+        },
+        {
+            "title": "抖音",
+            "url": "https://www.douyin.com",
+            "desc": "",
+            "tags": [
+                "社交",
+                "娱乐"
+            ]
+        },
+        {
+            "title": "Google",
+            "url": "https://www.google.com",
+            "tags": [
+                "搜索"
+            ]
+        },
+        {
+            "title": "哔哩哔哩",
+            "url": "https://www.bilibili.com",
+            "tags": [
+                "短视频"
+            ]
+        },
+        {
+            "title": "小红书",
+            "url": "https://www.xiaohongshu.com",
+            "tags": [
+                "社区",
+                "娱乐"
+            ]
+        },
+        {
+            "title": "Github",
+            "url": "https://github.com",
+            "tags": [
+                "code",
+                "资源"
+            ]
+        },
+        {
+            "title": "推特",
+            "url": "https://x.com",
+            "tags": [
+                "社交",
+                "吃瓜"
+            ]
+        }
+    ]
+}

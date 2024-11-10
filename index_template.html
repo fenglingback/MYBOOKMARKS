@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的书签导航</title>
+    <link rel="icon" href="https://cdn.icon-icons.com/icons2/2715/PNG/512/bookmarks_icon_172639.png"
+        type="image/x-icon">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>我的书签</h1>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="搜索书签...">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+
+        <div class="tags-container">
+            {% for tag in all_tags %}
+            <button class="tag-btn" data-tag="{{ tag }}">{{ tag }}</button>
+            {% endfor %}
+        </div>
+
+        <div class="bookmarks-container">
+            {% for bookmark in bookmarks %}
+            <a href="{{ bookmark.url }}" class="bookmark" data-tags="{{ bookmark.tags | join(',') }}" target="_blank"
+                rel="noopener noreferrer">
+                <span class="bookmark-title">{{ bookmark.title }}</span>
+                {% if bookmark.desc %}
+                <div class="bookmark-desc">{{ bookmark.desc }}</div>
+                {% endif %}
+                <div class="bookmark-tags">
+                    {% for tag in bookmark.tags %}
+                    <span>{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>
