@@ -17,6 +17,33 @@ body {
     padding: 0;
 }
 
+.tool-link {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: var(--text-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+.tool-link:hover {
+    background-color: var(--bm-bg);
+    transform: scale(1.1);
+}
+
+.tool-link svg {
+    width: 19px;
+    height: 19px;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;

@@ -4,11 +4,11 @@ from jinja2 import Environment, FileSystemLoader
 
 
 def get_data_by_json():
-    with open('configs.json', 'r', encoding='utf-8') as f:
+    with open('bookmarks.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     # 获取书签数据
-    bookmarks = data['Bookmarks']
+    bookmarks = data
     # print(bookmarks)
 
     # 获取所有标签
