@@ -2,9 +2,27 @@
 name: Render by issues and Deploy Pages
 
 on:
-  # 在 issues 上打开、编辑、关闭 issue，以及在 issue 上添加或删除标签时运行
-  issues:
-    types: [opened, edited, closed, labeled, unlabeled]
+  # 在 issues 上打开、编辑、关闭、删除 issue，以及在 issue 上添加或删除标签时运行
+  # issues:
+  #   types: [opened, edited, closed, deleted, labeled, unlabeled]
+
+  # 星标仓库时运行
+  watch:
+    types: [started]
+  
+  push:
+    # 在推送到默认分支时运行
+    # branches: ["main"]
+
+    # 在特定文件更改时运行
+    paths:
+      - '*.json'
+      - '*.py'
+      - '*.html'
+      - '*.css'
+      - '*.js'
+      - 'requirements.txt'
+      - '.github/workflows/**'
 
   # 允许你从 Actions 选项卡手动运行此工作流程
   workflow_dispatch:
@@ -15,14 +33,12 @@ permissions:
   pages: write
   id-token: write
 
-# 只允许一个并发部署，跳过正在进行的运行和最新排队的运行之间的排队运行。
-# 但是，不要取消正在进行的运行，因为我们希望这些生产部署能够完成。
+# 只允许一个并发部署
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # 由于我们只部署一次，因此只有一个部署作业
   deploy:
     environment:
       name: github-pages
@@ -43,6 +59,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Python script
+        env:
+          USERNAME: ${{ github.actor }}
+          REPO_NAME: ${{ github.event.repository.name }}
         run: python render.py  # 执行渲染脚本
         
       - name: Setup Pages

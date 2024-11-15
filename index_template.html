@@ -4,14 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的书签导航</title>
+    <title>{{ reponame }} | 拯救你的收藏</title>
     <link rel="icon" href="https://cdn.icon-icons.com/icons2/2715/PNG/512/bookmarks_icon_172639.png"
         type="image/x-icon">
     <link rel="stylesheet" href="./index.css">
 </head>
 
-<body>
-    <a href="./tools/json-generator.html" class="tool-link" title="书签json数据批量生成器" target="_blank">
+<body data-username="{{ username }}" data-reponame="{{ reponame }}">
+    <button id="star-button" class="star-button" aria-label="Star repository" title="部署书签页面">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="star-icon">
+            <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
+        </svg>
+    </button>
+    <a href="https://fenglingback.github.io/Awesome-OnlineTools/tools/add_issues.html" class="tool-link"
+        title="issue生成器" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path
@@ -20,7 +29,7 @@
         </svg>
     </a>
     <div class="container">
-        <h1>我的书签</h1>
+        <h1>我的收藏集</h1>
 
         <div class="search-container">
             <input type="text" id="search-input" placeholder="搜索书签...">

@@ -1,54 +1,45 @@
-import json
 import requests
 from jinja2 import Environment, FileSystemLoader
+import os
+
+username = os.environ.get('USERNAME')
+reponame = os.environ.get('REPO_NAME')
+
+# username = 'fenglingback'
+# reponame = 'TDC'
 
 
-def get_data_by_json():
-    with open('bookmarks.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
 
-    # 获取书签数据
-    bookmarks = data
-    # print(bookmarks)
-
-    # 获取所有标签
-    all_tags = sorted({tag for bookmark in bookmarks for tag in bookmark['tags']})
-    # print(all_tags)
-
-    return all_tags, bookmarks
-
-
-def get_data_by_issues():
-    # 替换为你的 GitHub 用户名和仓库名
-    username = 'fenglingback'
-    repo_name = 'TDC'
-
+def get_data():
     # 替换为你的 GitHub 访问令牌，可以解除请求限制
     # access_token = 'your_access_token'
 
     # headers = {'Authorization': f'token {access_token}'}
 
-    bm_url = f'https://api.github.com/repos/{username}/{repo_name}/issues'
+    bm_url = f'https://api.github.com/repos/{username}/{reponame}/issues'
     bm_params = {'state': 'open'}
     bm_resp = requests.get(bm_url, params=bm_params)
     issues = bm_resp.json()
     bookmarks = []
     for issue in issues:
-        # 获取标题，格式为：书签名 书签链接
-        # 书签名和书签链接之间用空格隔开
-        title = issue['title']
-        # print(f"title: {issue['title']}")
+        # 过滤非自己的 issue
+        if issue['user']['login'] != username:
+            continue
 
         # 获取书签名
-        bookmark_title = title.split(' ')[0]
-        # print(f"bookmark_name: {bookmark_title}")
+        bookmark_title = issue['title']
+        # print(f"bookmark_title: {bookmark_title}")
 
-        # 获取书签链接
-        bookmark_url = title.split(' ')[1]
+        body = issue['body']
+
+        if '\n\n' in body:
+            bookmark_url, bookmark_desc = tuple(body.split('\n\n', 1))
+        elif '\r\n\r\n' in body:
+            bookmark_url, bookmark_desc = tuple(body.split('\r\n\r\n', 1))
+        else:
+            bookmark_url, bookmark_desc = (body, '')
+
         # print(f"bookmark_url: {bookmark_url}")
-
-        # 获取描述
-        bookmark_desc = issue['body']
         # print(f"bookmark_desc: {bookmark_desc}")
 
         # 获取标签
@@ -65,7 +56,7 @@ def get_data_by_issues():
 
 
     # 获取所有标签
-    all_tags_url = f'https://api.github.com/repos/{username}/{repo_name}/labels'
+    all_tags_url = f'https://api.github.com/repos/{username}/{reponame}/labels'
     all_tags_resp = requests.get(all_tags_url)
     all_tags = [tag['name'] for tag in all_tags_resp.json()]
     # print(all_tags)
@@ -87,13 +78,14 @@ def render(all_tags, bookmarks):
 
     # 将数据渲染到模板中，并将结果写入目标文件
     with open('index.html', 'w', encoding='utf-8') as f:
-        result = template.render(all_tags=all_tags, bookmarks=bookmarks)
+        result = template.render(all_tags=all_tags, bookmarks=bookmarks, username=username, reponame=reponame)
         f.write(result)
 
 
 if __name__ == '__main__':
-    
-    render(*get_data_by_json())
 
-    # render(*get_data_by_issues())
+    render(*get_data())
+    # get_data()
+
+
 
